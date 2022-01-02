@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Journal</title>
+    <link href="https://fonts.googleapis.com/css?family=Oswald:400,600,700|Ranga:400,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div id = "app">
+        <div class ="holder headline">
+            Weather Journal App
+        </div>
+        
+        <div id="neededData">
+            <div class="holder date">
+                <label for="date">Date</label>
+                <input type="date" id="entryDate">
+            </div>
+
+            <div class ="holder zip">
+                <label for="zip">Enter Zipcode here</label>
+                <input type="text" id="zip" placeholder="enter zip code here">
+            </div>
+        </div>
+
+        <div class="holder map">
+            <label class="location">Name of Location</label>
+            <div class="mapArea">
+                <img src="/img/snowflake.svg">
+                <!-- <iframe id='iframeid' src="https://www.google.com/maps/place/81009"></iframe> -->
+            </div>
+        </div>
+
+        <div class='weather holder hidden' alt='weather'>
+            <label class="weatherConditions">Conditions</label>
+            <div class="conditions"></div>
+            <div class="temp"></div>
+            <div class="icon"><img src></div>
+            <!-- for large devices -->
+            <div class='humidity hidden'></div>
+            <div class='wind hidden'></div>
+            <div class='highLow hidden'></div>
+            <!-- FUTURE TODO: make option for changing the metrics for the temp F/C -->
+            
+        </div>
+        <!-- TODO: need to draw SVG for danger rose: how will i make it interactive? should it autofill? -->
+        <div class="rose holder hidden">
+            <div class="mountainRose"><img src='img/AvalancheDangerRose.svg'>r AVY data? rose size & likeihood</div>
+            <div>Dropdown menu for avalanche danger</div>
+        </div> 
+  
+        <div class ="holder feel">
+            <label for="feelings">How are you feeling today?</label>
+            <textarea class= "myInput" id="feelings" placeholder="Enter your feelings here" rows="9" cols="50"></textarea>
+            <button id="generate" type = "submit"> Generate </button>
+        </div>
+        
+        <div class ="holder entry">
+            <div class = "title">Most Recent Entry</div>
+            <div id = "entryHolder">
+                <div id = "date"></div> 
+                <div id = "temp"></div>
+                <div id = "content"></div>
+            </div>
+        </div>
+
+        <div>
+            <!-- <img class="loading hidden" src="img/icon"> -->
+        </div>
+    </div>
+    <script src='js/app.js'></script>
+
+    <!-- want a visual 'map ' of location? -->
+    <!-- <script type='text/javascript' src='https://maps.googleapis.com/maps/api/js?client=&appid=175c228ba1b034eb1471d0c1f8094853'></script> -->
+</body>
+</html>
