@@ -1,7 +1,11 @@
 //constants for local server
 //empty object to act as endpoint
-const projectData = {};
+let projectData = [];
 const newData = [];
+// projectData = {
+//     'name':"morgan",
+//     'age':'30'
+// }
 
 //express to run sever and routes
 const express = require('express');
@@ -25,7 +29,7 @@ app.use(express.json());
 
 
 //constants for local server
-const port = 7550;
+const port = 4550;
 //create a local server using Node and Express
 const server = app.listen(port, listening);
 //listening function
@@ -39,14 +43,17 @@ app.get('/', (req,res) => {
     // console.log(projectData);
 })
 
+
+//NOTE: might have been an issue with two post calls confusing the network with same credentials
 app.post('/', (req,res) => {
     let data = req.body
     //how do i make POST route anticipate 3 pieces of data 
     projectData.push(data);
-})
-
-//post need to send data with date temp and content
-app.post('/', (req,res) => {
-    // res.send({'temp': '', 'date': '','content': ''});
     console.log(req.body);
 })
+
+// app.post(http://localhost:7550/, (req,res) => {
+//     let data = req.body
+//     projectData.push(data);
+//     // console.log(req.body);
+// })
