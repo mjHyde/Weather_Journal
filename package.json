@@ -1,0 +1,24 @@
+{
+  "name": "weather-journal",
+  "version": "1.0.0",
+  "description": "weather-journal-project, project 3, backcountry-skiing journal",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [
+    "weather-journal",
+    "backcountry",
+    "skiing",
+    "journal"
+  ],
+  "author": "Morgan Hyde, morgan.j.hyde@gmail.com",
+  "license": "ISC",
+  "dependencies": {
+    "body": "^5.1.0",
+    "body-parser": "^1.19.1",
+    "cors": "^2.8.5",
+    "express": "^4.17.2"
+  }
+}
