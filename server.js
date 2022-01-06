@@ -23,13 +23,13 @@ app.use(bodyParser.json());
 app.use(cors());
 
 
-//pointing the code to the project folder
-app.use(express.static('Weather Journal')); 
+//pointing the code to the project folder (initialize)
+app.use(express.static('website')); 
 app.use(express.json());
 
 
 //constants for local server
-const port = 4550;
+const port = 7550;
 //create a local server using Node and Express
 const server = app.listen(port, listening);
 //listening function
@@ -43,17 +43,23 @@ app.get('/', (req,res) => {
     // console.log(projectData);
 })
 
-
-//NOTE: might have been an issue with two post calls confusing the network with same credentials
-app.post('/', (req,res) => {
-    let data = req.body
-    //how do i make POST route anticipate 3 pieces of data 
-    projectData.push(data);
-    console.log(req.body);
+app.get('/add', (req,res) => {
+    res.send(projectData);
+    console.log(projectData);
 })
 
-// app.post(http://localhost:7550/, (req,res) => {
+//NOTE: might have been an issue with two post calls confusing the network with same credentials
+// app.post('/', (req,res) => {
 //     let data = req.body
+//     //how do i make POST route anticipate 3 pieces of data 
 //     projectData.push(data);
-//     // console.log(req.body);
+//     console.log(req.body);
 // })
+
+app.post('/add', (req,res) => {
+    // console.log('using the /add post');
+    let data = req.body;
+    projectData.push(data);
+    // console.log(req.body);
+    res.send("POST received");
+})
