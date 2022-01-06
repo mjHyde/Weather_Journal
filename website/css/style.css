@@ -51,7 +51,7 @@ body {
     /* grid-row: 4; */
 }
 
-.location {
+#location {
     border-bottom: solid #0c2a69 2px;
     grid-row: 1;
     grid-column: 1 / 3;
@@ -178,7 +178,7 @@ button {
     color: #f0d43a;
     font-size: 26px;
     font-family: 'Oswald', sans-serif;
-    border: none;
+    border: #FFF solid 2px;
     border-radius: 15px;
     /* box-shadow: 2px 4px 5px #444; */
 }
@@ -189,8 +189,8 @@ h1 {
 
 textarea {
     background:#6cc7e0;
-    color: #f0d43a;
-    font-size: 20px;
+    color: #96810e;
+    font-size: 24px;
     font-family: 'Oswald', sans-serif;
     width: 96%;
 }
@@ -204,27 +204,41 @@ textarea {
     border-bottom: #0c2a69 2px solid;
 }
 
-#entryHolder {
+.entryHolder {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: auto;
     grid-gap: 1em;
+    border-bottom: #96810e solid 2px;
+    margin: 20px 0;
+    padding: 10px 0;
 }
 
-#date {
+.date {
     grid-row: 1;
-    grid-column: 1 / 3;
+    grid-column: 1;
+    justify-content: center;
+    align-items: center;
 }
 
-#temp {
+.city {
     grid-row: 1;
+    grid-column: 2;
+    justify-content: center;
+    align-items: center;
+}
+
+.temps {
+    grid-row: 1;
+    grid-column: 3;
     display: flex;
     justify-content: center;
 }
 
-#content {
-    grid-row: 2;
+.content {
+    /* grid-row: 2; */
     grid-column: 1 / 4;
+    overflow-wrap: break-word;
 }
 
 /* Reset style for HTML element on active to have no border*/

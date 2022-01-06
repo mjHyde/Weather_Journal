@@ -7,7 +7,7 @@
 
 let emptyData = {};
 //for the GET/POST route call to use as the URL attribute
-const localServer = 'http://localhost:4550/';
+const localServer = 'http://localhost:7550/';
 //the last part with API key 
 const apiKeyNumber = '175c228ba1b034eb1471d0c1f8094853';
 //the base part of the url for get city info with zip code 
@@ -95,50 +95,6 @@ function updateWeatherWidget () {
     weatherContainer[0].classList.remove('hidden');
 }
 
-//function to call get request to grab data for post?
-async function dataEntry() {
-
-    //create variable for text area data entry .. tried as global but wasn't working 
-    const content = document.getElementById('feelings').value;
-    //create variable for temp
-    const temperature = document.getElementsByClassName('temp')[0].innerText;
-
-    //double check to make sure there is an entry
-    if(feelings.length === 0) {
-        console.log("error, no entry made");
-        alert('need to write entry before submitting!');
-        return
-    }
-
-    //create an object to post to server
-    let newEntryData = new Object(); 
-        //temp
-        newEntryData.temp = temperature;
-        //date
-        newEntryData.date = dateData;
-        //content
-        newEntryData.content = content;
-
-    //confirmed that i have a new object with the data collected!
-    // console.log(newEntryData); 
-    console.log('first check point!')
-    await post('/all', newEntryData);
-    console.log('second check point!')
-    // let anotherEmptyData = {}
-    // await post('/', anotherEmptyData)
-
-    //this pushes data straight to entry box
-        // //take new entry and input into entries box
-        // const dateEntry = document.getElementById('date');
-        // const tempEntry = document.getElementById('temp');
-        // const contentEntry = document.getElementById('content');
-        
-        // //fill in new entry with data
-        // dateEntry.innerText = newEntryData.date;
-        // tempEntry.innerText = newEntryData.temp;
-        // contentEntry.innerText = newEntryData.content;
-}
-
 //ROUTES
 const get = async (url = '') => {
     const res = await fetch(url)
@@ -163,39 +119,21 @@ const post = async (url = '', data ) => {
         // Body data type must match "Content-Type" header        
         body: JSON.stringify(data), 
         });
-    console.log(response);
+    // console.log(response);
 
     try {
         const newData = await response.json();
-        console.log(newData);
+        // console.log(newData);
         return newData;
     }catch(error) {
         console.log("error", error);
     }
 }
 
-const retrieveData = async () =>{
-    const request = await fetch('/all');
-    try {
-    // Transform into JSON
-    const allData = await request.json()
-    console.log(allData)
-    // Write updated data to DOM elements
-    document.getElementById('temp').innerHTML = Math.round(allData.temp)+ 'degrees';
-    document.getElementById('content').innerHTML = allData.feel;
-    document.getElementById("date").innerHTML =allData.date;
-    }
-    catch(error) {
-      console.log("error", error);
-      // appropriately handle the error
-    }
-}
-
 //ASYNC FUNCTIONS
-
 //function for checking if date and zip exists 
 async function checkData () {
-    const locationText = document.getElementsByClassName('location');
+    const locationText = document.getElementById('location');
     const loadingImg = document.querySelector('span')
     //will grab data for zip and date
     getData();
@@ -215,12 +153,12 @@ async function checkData () {
     setTimeout(() => {
         loadingImg.classList.add('hidden');
         // map image load
-    }, 4000);
+    }, 2500);
 
     //if statement so doesn't change name to nonexistent name
     if (emptyData.name) {
         weatherData['City'] = emptyData.name;
-        locationText[0].innerText = weatherData.City;
+        locationText.innerText = weatherData.City;
     }
     
     //TODO:when making async put await instead of setTimeout
@@ -254,23 +192,92 @@ async function getWeather() {
     }
 }
 
-//this 'grabs' 
-async function whatever() {
-    const dataThis = await fetch ('http://localhost:4550/')
-    console.log(dataThis)
+//function to call get request to grab data for post?
+async function dataEntry() {
+
+    //create variable for text area data entry .. tried as global but wasn't working 
+    const content = document.getElementById('feelings').value;
+    //create variable for temp
+    const temperature = document.getElementsByClassName('temp')[0].innerText;
+
+    //double check to make sure there is an entry
+    if(feelings.length === 0) {
+        console.log("error, no entry made");
+        alert('need to write entry before submitting!');
+        return
+    }
+
+    //create an object to post to server
+    let newEntryData = new Object(); 
+        //temp
+        newEntryData.temp = temperature;
+        //date
+        newEntryData.date = dateData;
+        //content
+        newEntryData.content = content;
+
+    //confirmed that i have a new object with the data collected!
+    // console.log(newEntryData);
+    await post('/add', newEntryData);
+    
+    const anotherEmptyData = await get('/add');
+    console.log(anotherEmptyData);
+    let i = anotherEmptyData.length-1;
+    // //fill in new entry with data && wprks with IDs
+    // if (i) {
+    //     document.getElementById('date').innerText = anotherEmptyData[i].date;
+    //     document.getElementById('temp').innerText = anotherEmptyData[i].temp;
+    //     document.getElementById('content').innerText = anotherEmptyData[i].content;
+    // }
+    let holderEntry =document.getElementById('holderEntry');
+    // let i=0;
+
+//another if statement checking if holder entry exists to repopulate the missing entries?
+
+    if (i) {
+        //make div containter for entry
+        let entryHolder = document.createElement('div');
+        entryHolder.setAttribute('class', `entryHolder${i}`);
+        entryHolder.classList.add('entryHolder');
+        
+        //create DIVs for data 
+        let dateEntry = document.createElement('div');
+        dateEntry.setAttribute('class', `date${[i]}`);
+        dateEntry.classList.add('date');
+        dateEntry.innerText = anotherEmptyData[i].date;
+        entryHolder.append(dateEntry);
+
+        let cityEntry = document.createElement('div');
+        cityEntry.setAttribute('class', `city${[i]}`);
+        cityEntry.classList.add('city');
+        cityEntry.innerText = document.getElementById('location').innerText;
+        entryHolder.append(cityEntry);
+
+        let tempEntry = document.createElement('div');
+        tempEntry.setAttribute('class', `temp${[i]}`);
+        tempEntry.classList.add('temps');
+        tempEntry.innerText = anotherEmptyData[i].temp;
+        entryHolder.append(tempEntry);
+
+        let contentEntry = document.createElement('div');
+        contentEntry.setAttribute('class', `content${[i]}`);
+        contentEntry.classList.add('content');
+        contentEntry.innerText = anotherEmptyData[i].content;
+        entryHolder.append(contentEntry);
+
+        
+        // if (i === 0) {
+            holderEntry.appendChild(entryHolder);
+        // }else {
+        //     holderEntry.insertBefore(entryHolder,lastChild);
+        // }
+
+        // let lastChild = entryHolder;
+        
+        // i++;
+        //}
+    }
 }
-
-
-// TODO:write ana async function to dynamically upate UI
-
-// const updateUI = async () => {
-//     // function to GET data from express and update HTML
-//     const res = await fetch("/retrieve")
-//     try {
-//       const data = await res.json()
-//       // Now update HTML
-//     } catch (e) { throw new Error(e) }
-//}
   
 
 //FUTURE TODO: want to add interactive svg of avalanche danger rose
